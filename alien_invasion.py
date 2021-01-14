@@ -129,12 +129,31 @@ class AlienInvasion:
                 self.bullets.remove(bullet)
         # print(len(self.bullets))
 
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        """响应子弹和外星人碰撞"""
+        # 删除发生碰撞的子弹和外星人
+        # 检查是否有子弹击中了外星人
+        # 如果是，就删除相应的子弹和外星人
+        collisions = pygame.sprite.groupcollide(
+            self.bullets, self.aliens, True, True)
+
+        if not self.aliens:
+            # 删除现有的子弹并新建一群外星人
+            self.bullets.empty()
+            self._create_fleet()
+
     def _update_aliens(self):
         """更新外星人群中所有外星人的位置,
         检查是否有外星人处于屏幕边缘
         并调整整群外星人的位置"""
         self._check_fleet_edges()
         self.aliens.update()
+
+        # 检测外星人和飞船之间的碰撞
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("Ship hit!")
 
     def _check_fleet_edges(self):
         """有外星人到达边缘时采取相应的措施"""
