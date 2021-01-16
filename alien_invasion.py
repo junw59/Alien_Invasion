@@ -137,8 +137,15 @@ class AlienInvasion:
         # 创建外星人群
         for row_number in range(number_rows):
             # 创建第一行外星人
-            for alien_number in range(number_aliens_x):
-                self._create_alien(alien_number, row_number)
+
+            # 使用矩形排列
+            # for alien_number in range(number_aliens_x):
+            #     self._create_alien(alien_number, row_number)
+
+            # 使用三角排列
+            # TODO: 添加判断行和外星人数目的语句
+            for alien_number in range(number_aliens_x - row_number * 2):
+                self._create_alien_triangle(alien_number, row_number)
 
     def _create_alien(self, alien_number, row_number):
         # 创建一个外星人并将其加入当前行
@@ -148,6 +155,16 @@ class AlienInvasion:
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
+
+    def _create_alien_triangle(self, alien_number, row_number):
+        # 创建随行数变化的外星人
+        alien = Alien(self)
+        alien_width , alien.height = alien.rect.size
+        alien.x = alien_width + alien_width * row_number * 2 + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+        self.aliens.add(alien)
+
 
     def _update_screen(self):
         # 每次循环时都重绘屏幕
