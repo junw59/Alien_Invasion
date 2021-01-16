@@ -153,8 +153,9 @@ class AlienInvasion:
         # 每次循环时都重绘屏幕
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
+        if self.stats.game_active:
+            for bullet in self.bullets.sprites():
+                bullet.draw_bullet()
         self.aliens.draw(self.screen)
 
         # 显示得分
