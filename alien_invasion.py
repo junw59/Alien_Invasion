@@ -103,6 +103,8 @@ class AlienInvasion:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+        elif event.key == pygame.K_p:
+            self.stats.game_active = not self.stats.game_active
 
     def _check_keyup_events(self, event):
         """响应松开"""

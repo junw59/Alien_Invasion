@@ -40,7 +40,7 @@ class Scoreboard:
         self.high_score_image = self.font.render(high_score_str, True,
             self.text_color, self.settings.bg_color)
 
-        # 在屏幕右上角显示得分
+        # 在屏幕上端中间显示得分
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.score_rect.top
