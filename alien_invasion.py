@@ -165,6 +165,7 @@ class AlienInvasion:
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
+# TODO: 将外星人从中间开始放置
 
     def _update_screen(self):
         # 每次循环时都重绘屏幕
