@@ -126,8 +126,18 @@ class AlienInvasion:
         # 间距为外星人宽度
         alien = Alien(self)
         alien_width , alien_height = alien.rect.size
-        available_space_x = self.settings.screen_width - (2 * alien_width)
-        number_aliens_x = available_space_x // (2 * alien_width)
+
+        # 顺序排列的数目
+        # available_space_x = self.settings.screen_width - (2 * alien_width)
+        # number_aliens_x = available_space_x // (2 * alien_width)
+
+        # 三角中心排列的数目
+        half_space_x = (self.settings.screen_width - (2 * alien_width)) // 2
+        number_aliens_x_half = half_space_x // (2 * alien_width)
+        row_center = self.screen.get_rect().centerx
+        derivation_x = row_center - number_aliens_x_half * 2 * alien_width - alien_width //2
+        number_aliens_x = number_aliens_x_half * 2 + 1
+
         # 计算可容纳多少行外星人
         ship_height = self.ship.rect.height
         available_space_y = (self.settings.screen_height - 
@@ -143,16 +153,14 @@ class AlienInvasion:
             #     self._create_alien(alien_number, row_number)
 
             # 使用三角排列
-            if number_aliens_x - row_number * 2 >= 1:
-                for alien_number in range(number_aliens_x - row_number * 2):
-                    self._create_alien_triangle(alien_number, row_number)
-
-            # TODO:# 使用三角中心排列
             # if number_aliens_x - row_number * 2 >= 1:
             #     for alien_number in range(number_aliens_x - row_number * 2):
-            #         row_center = self.screen.get_rect().centerx
-            #         derivation_x = row_center - 
             #         self._create_alien_triangle(alien_number, row_number)
+
+            # 使用三角中心排列
+            if number_aliens_x - row_number * 2 >= 1:
+                for alien_number in range((number_aliens_x - row_number * 2) ):
+                    self._create_alien_triangle_center(alien_number, row_number, derivation_x)
 
     def _create_alien(self, alien_number, row_number):
         # 创建一个外星人并将其加入当前行
@@ -172,12 +180,11 @@ class AlienInvasion:
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
-# TODO: 将外星人从中间开始放置
-    def _create_alien_triangle_center(self, alien_number, row_number):
+    def _create_alien_triangle_center(self, alien_number, row_number, derivation_x):
         # 创建随行数变化的外星人，外星人从中间开始放置
         alien = Alien(self)
         alien_width , alien.height = alien.rect.size
-        alien.x = alien_width + alien_width * row_number * 2 + 2 * alien_width * alien_number
+        alien.x = derivation_x + alien_width * row_number * 2 + 2 * alien_width * alien_number
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
