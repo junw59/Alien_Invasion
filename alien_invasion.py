@@ -143,9 +143,9 @@ class AlienInvasion:
             #     self._create_alien(alien_number, row_number)
 
             # 使用三角排列
-            # TODO: 添加判断行和外星人数目的语句
-            for alien_number in range(number_aliens_x - row_number * 2):
-                self._create_alien_triangle(alien_number, row_number)
+            if number_aliens_x - row_number * 2 >= 1:
+                for alien_number in range(number_aliens_x - row_number * 2):
+                    self._create_alien_triangle(alien_number, row_number)
 
     def _create_alien(self, alien_number, row_number):
         # 创建一个外星人并将其加入当前行
